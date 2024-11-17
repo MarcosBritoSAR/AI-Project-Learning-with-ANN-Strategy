@@ -1,56 +1,30 @@
-from abc import ABC, abstractmethod
-import torch, torch.nn as nn
+from abc import ABC, abstractmethod  # Importa as classes ABC e abstractmethod do módulo abc
+import torch, torch.nn as nn  # Importa o PyTorch e o módulo de redes neurais do PyTorch
 
 class AI(nn.Module, ABC):
     def __init__(self, team: int) -> None:
-        super(AI, self).__init__()
-        self.team = team
+        super(AI, self).__init__()  # Inicializa a classe base nn.Module e ABC
+        self.team = team  # Define o time do agente
 
     @abstractmethod
     def get_action(self, view: dict):
         """ 
-            Parameters:
-                view: data from each cell inside the agents rage of view
-            Return:
-                action: which contains what action agent takes, value range from
-                0 to 9, 0-7 are move actions in corresponding direction, 8 is attack,
-                and 9 is idle.
+        Método abstrato para obter a ação do agente.
+            Parâmetros:
+                view: dados de cada célula dentro do campo de visão do agente
+            Retorno:
+                action: ação que o agente toma, variando de 0 a 9, onde 0-7 são ações de movimento em direções correspondentes, 8 é ataque e 9 é ficar parado.
         """
         pass
 
     @abstractmethod
     def turn_reward(self, team: int, action: int, list_agents: list) -> None:
         """
-        Method called after every turn in a generation, can be used to
-        calculate fitness modularly.
-            Parameters:
-                team: int, agent's team
-                action: int, action taken by agent
-                list_agents: list[Agent], list of agents in a match
-            Return: None
+        Método abstrato chamado após cada turno em uma geração, pode ser usado para calcular a aptidão modularmente.
+            Parâmetros:
+                team: int, time do agente
+                action: int, ação tomada pelo agente
+                list_agents: list[Agent], lista de agentes em uma partida
+            Retorno: None
         """
         pass
-    
-    @abstractmethod
-    def get_reward(self, agents: dict, *args):
-        """
-            This function must calculate how to reward a tem of agents based on
-            the actions taken after training iteration.
-            Think of it as an equation on what benefits the overall goals of your
-            agents and what are impediments to those goals.
-            Example: Total life of my team - total life of enemy team
-            Parameters:
-                agents: dictionary with agents by position
-            Return:
-                reward value for training the AI
-        """
-        pass
-
-    def clip_action(self, action: tuple):
-        """
-            Clips the first value of the action into recognizeable action
-            0-7 - Move
-            8   - Attack
-            9   - Idle
-        """
-        return min(max(action, 0), 9)
