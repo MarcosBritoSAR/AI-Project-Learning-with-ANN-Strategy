@@ -15,6 +15,3 @@ Esse projeto apresenta uma competição entre dois times de 3 agentes. Agentes p
 
 Modelos devem ser treinados para sair o índice de uma dessas ações (0-9).
 
-**Exemplo de chamada - (treinamento)**: `python main.py -t -t0m="meu_modulo" -t0c="minha_classe" -t1m="random_ai" -t1c="DumbAI" -mw=20 -mh=20`
-
-**Exemplo de chamada - (apresentação)**: `python main.py -p -t0m="meu_modulo" -t0c="minha_classe" -t1m="random_ai" -t1c="DumbAI" -mw=20 -mh=20`
